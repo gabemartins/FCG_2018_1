@@ -484,11 +484,32 @@ int main(int argc, char* argv[])
         glUniform1i(object_id_uniform, COW);
         DrawVirtualObject("cow");
 
-        model = Matrix_Translate(0.0f,-1.0f,0.0f)
-              * Matrix_Scale (3.0f,3.0f,3.0f);
-        glUniformMatrix4fv(model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
-        glUniform1i(object_id_uniform, FENCE);
-        DrawVirtualObject("fence");
+        #define distance_fance 3.8f
+        // Desenha o cercado esquerdo
+        float pos_x = 0.0f;
+        int i = 0;
+        for (i=0; i<10; i++)
+        {
+            model = Matrix_Translate(pos_x,-1.0f,0.0f)
+                  * Matrix_Scale (3.0f,3.0f,3.0f);
+            glUniformMatrix4fv(model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
+            glUniform1i(object_id_uniform, FENCE);
+            DrawVirtualObject("fence");
+            pos_x+=distance_fance;
+        }
+
+        pos_x = 0.0f;
+
+        // Desenha o cercado direito
+        for (i=0; i<10; i++)
+        {
+            model = Matrix_Translate(pos_x,-1.0f,10.0f)
+                  * Matrix_Scale (3.0f,3.0f,3.0f);
+            glUniformMatrix4fv(model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
+            glUniform1i(object_id_uniform, FENCE);
+            DrawVirtualObject("fence");
+            pos_x+=distance_fance;
+        }
 
 
         // Pegamos um vértice com coordenadas de modelo (0.5, 0.5, 0.5, 1) e o

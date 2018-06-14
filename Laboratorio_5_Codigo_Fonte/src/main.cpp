@@ -48,6 +48,8 @@
 #include "utils.h"
 #include "matrices.h"
 
+float pos_vaca = 3.0f;
+
 // Estrutura que representa um modelo geométrico carregado a partir de um
 // arquivo ".obj". Veja https://en.wikipedia.org/wiki/Wavefront_.obj_file .
 struct ObjModel
@@ -479,10 +481,17 @@ int main(int argc, char* argv[])
         glUniform1i(object_id_uniform, PLANE);
         DrawVirtualObject("plane");
 
-        model = Matrix_Translate(3.0f,0.0f,0.0f);
+        model = Matrix_Translate(pos_vaca,0.0f,0.0f);
         glUniformMatrix4fv(model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
         glUniform1i(object_id_uniform, COW);
         DrawVirtualObject("cow");
+
+        // processa por CPU
+        pos_vaca+= 0.01f;
+        if(pos_vaca>10.0f){
+            pos_vaca = 3.0f;
+        }
+
 
         #define distance_fance 3.8f
         // Desenha o cercado esquerdo

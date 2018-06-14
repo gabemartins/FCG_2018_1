@@ -49,6 +49,7 @@
 #include "matrices.h"
 
 #define vaca_inicial 5.0f
+#define vaca_no_chao -0.5f
 float pos_vaca = vaca_inicial;
 
 // Estrutura que representa um modelo geométrico carregado a partir de um
@@ -469,8 +470,8 @@ int main(int argc, char* argv[])
         DrawVirtualObject("sphere");
 
         // Desenhamos o modelo do coelho
-        model = Matrix_Translate(1.0f,0.0f,0.0f)
-              * Matrix_Rotate_X(g_AngleX + (float)glfwGetTime() * 0.1f);
+        model = Matrix_Translate(5.0f,0.0f,-10.0f)
+              /* Matrix_Rotate_X(g_AngleX + (float)glfwGetTime() * 0.1f)*/;
         glUniformMatrix4fv(model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
         glUniform1i(object_id_uniform, BUNNY);
         DrawVirtualObject("bunny");
@@ -481,8 +482,8 @@ int main(int argc, char* argv[])
         glUniformMatrix4fv(model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
         glUniform1i(object_id_uniform, PLANE);
         DrawVirtualObject("plane");
-
-        model = Matrix_Translate(pos_vaca,0.0f,0.0f);
+        //VACA
+        model = Matrix_Translate(pos_vaca,vaca_no_chao,0.0f);
         glUniformMatrix4fv(model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
         glUniform1i(object_id_uniform, COW);
         DrawVirtualObject("cow");
@@ -494,7 +495,7 @@ int main(int argc, char* argv[])
         }
 
 
-        #define distance_fance 3.8f
+        #define distance_fence 3.8f
         // Desenha o cercado esquerdo
         float pos_x = 0.0f;
         int i = 0;
@@ -505,11 +506,24 @@ int main(int argc, char* argv[])
             glUniformMatrix4fv(model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
             glUniform1i(object_id_uniform, FENCE);
             DrawVirtualObject("fence");
-            pos_x+=distance_fance;
+            pos_x+=distance_fence;
         }
 
-        pos_x = 0.0f;
+        pos_x = 2 * -distance_fence;
 
+        for (i=0; i<10; i++)
+        {
+            if (i != 10)
+            {
+            model = Matrix_Translate(pos_x,-1.0f,0.0f)
+                  * Matrix_Scale (3.0f,3.0f,3.0f);
+            glUniformMatrix4fv(model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
+            glUniform1i(object_id_uniform, FENCE);
+            DrawVirtualObject("fence");
+            pos_x-=distance_fence;
+            }
+        }
+        pos_x = 0.0f;
         // Desenha o cercado direito
         for (i=0; i<10; i++)
         {
@@ -518,8 +532,20 @@ int main(int argc, char* argv[])
             glUniformMatrix4fv(model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
             glUniform1i(object_id_uniform, FENCE);
             DrawVirtualObject("fence");
-            pos_x+=distance_fance;
+            pos_x+=distance_fence;
         }
+        pos_x = 2* -distance_fence;
+
+        for (i=0; i<10; i++)
+        {
+            model = Matrix_Translate(pos_x,-1.0f,10.0f)
+                  * Matrix_Scale (3.0f,3.0f,3.0f);
+            glUniformMatrix4fv(model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
+            glUniform1i(object_id_uniform, FENCE);
+            DrawVirtualObject("fence");
+            pos_x-=distance_fence;
+        }
+
 
 
         // Pegamos um vértice com coordenadas de modelo (0.5, 0.5, 0.5, 1) e o

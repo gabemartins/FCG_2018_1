@@ -48,7 +48,8 @@
 #include "utils.h"
 #include "matrices.h"
 
-float pos_vaca = 3.0f;
+#define vaca_inicial 5.0f
+float pos_vaca = vaca_inicial;
 
 // Estrutura que representa um modelo geométrico carregado a partir de um
 // arquivo ".obj". Veja https://en.wikipedia.org/wiki/Wavefront_.obj_file .
@@ -486,10 +487,10 @@ int main(int argc, char* argv[])
         glUniform1i(object_id_uniform, COW);
         DrawVirtualObject("cow");
 
-        // processa por CPU
-        pos_vaca+= 0.01f;
+        // velocidade da vaca
+        pos_vaca+= 0.02f;
         if(pos_vaca>10.0f){
-            pos_vaca = 3.0f;
+            pos_vaca = vaca_inicial;
         }
 
 

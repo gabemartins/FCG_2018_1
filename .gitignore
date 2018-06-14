@@ -1,2 +1,5 @@
 
 Laboratorio_5_Codigo_Fonte/bin/Debug/main.exe
+*.exe
+*.depend
+*.layout

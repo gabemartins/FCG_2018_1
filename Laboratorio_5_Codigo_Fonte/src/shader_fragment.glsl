@@ -36,6 +36,7 @@ uniform sampler2D TextureImage1;
 uniform sampler2D TextureImage2;
 uniform sampler2D TextureImage3;
 uniform sampler2D TextureImage4;
+uniform sampler2D TextureImage5;
 
 // O valor de saída ("out") de um Fragment Shader é a cor final do fragmento.
 out vec3 color;
@@ -173,6 +174,7 @@ void main()
     vec3 Kd2 = texture(TextureImage2, vec2(U,V)).rgb;
     vec3 Kd3 = texture(TextureImage3, vec2(U,V)).rgb;
     vec3 Kd4 = texture(TextureImage4, vec2(U,V)).rgb;
+    vec3 Kd_vaca = texture(TextureImage5, vec2(U,V)).rgb;
     // Equação de Iluminação
     float lambert = max(0,dot(n,l));
 
@@ -190,11 +192,11 @@ void main()
     }
     else if (object_id == COW)
     {
-    color = (Kd4 * (lambert + 0.01));
+    color = (Kd_vaca * (lambert + 0.01));
     }
     else if (object_id == FENCE)
     {
-    color = (Kd4 * (lambert + 0.01));
+    color = (Kd4 * (lambert + 0.5));
     }
 
 

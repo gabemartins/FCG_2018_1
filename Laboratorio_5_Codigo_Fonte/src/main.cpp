@@ -307,7 +307,8 @@ int main(int argc, char* argv[])
     LoadTextureImage("../../data/tc-earth_daymap_surface.jpg");      // TextureImage0
     LoadTextureImage("../../data/tc-earth_nightmap_citylights.gif"); // TextureImage1
     LoadTextureImage("../../data/grass.jpg"); //TextureImage2
-    LoadTextureImage("../../data/stars.png");
+    LoadTextureImage("../../data/stars.png");//TextureImage3
+    LoadTextureImage("../../data/woodtex.jpg");//TextureImage4
 
     // Construímos a representação de objetos geométricos através de malhas de triângulos
     ObjModel spheremodel("../../data/sphere.obj");
@@ -325,6 +326,10 @@ int main(int argc, char* argv[])
     ObjModel cowmodel("../../data/cow.obj");
     ComputeNormals(&cowmodel);
     BuildTrianglesAndAddToVirtualScene(&cowmodel);
+
+    ObjModel fencemodel("../../data/fence.obj");
+    ComputeNormals(&fencemodel);
+    BuildTrianglesAndAddToVirtualScene(&fencemodel);
 
 
 
@@ -447,6 +452,7 @@ int main(int argc, char* argv[])
         #define BUNNY  1
         #define PLANE  2
         #define COW 3
+        #define FENCE 4
 
         // Desenhamos o modelo da esfera
         model = Matrix_Translate(0.0f,0.0f,0.0f)
@@ -472,12 +478,16 @@ int main(int argc, char* argv[])
         glUniform1i(object_id_uniform, PLANE);
         DrawVirtualObject("plane");
 
-        model = Matrix_Translate(2.0f,0.0f,0.0f)
-              * Matrix_Scale (50.0f,50.0f,50.0f)
-              * Matrix_Rotate_X(g_AngleX + (float)glfwGetTime() * 0.1f);
+        model = Matrix_Translate(3.0f,0.0f,0.0f);
         glUniformMatrix4fv(model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
         glUniform1i(object_id_uniform, COW);
         DrawVirtualObject("cow");
+
+        model = Matrix_Translate(0.0f,-1.0f,0.0f)
+              * Matrix_Scale (3.0f,3.0f,3.0f);
+        glUniformMatrix4fv(model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
+        glUniform1i(object_id_uniform, FENCE);
+        DrawVirtualObject("fence");
 
 
         // Pegamos um vértice com coordenadas de modelo (0.5, 0.5, 0.5, 1) e o
@@ -656,6 +666,7 @@ void LoadShadersFromFiles()
     glUniform1i(glGetUniformLocation(program_id, "TextureImage1"), 1);
     glUniform1i(glGetUniformLocation(program_id, "TextureImage2"), 2);
     glUniform1i(glGetUniformLocation(program_id, "TextureImage3"), 3);
+    glUniform1i(glGetUniformLocation(program_id, "TextureImage4"), 4);
     glUseProgram(0);
 }
 

@@ -50,9 +50,21 @@
 #include "utils.h"
 #include "matrices.h"
 
-#define vaca_inicial -20.0f
-#define vaca_no_chao -0.5f
 #define volta_vaca 30.0f
+#define vaca_inicial -20.0f
+#define vaca_no_chao_1  0.7f
+#define vaca_no_chao_2 -0.5f
+#define vaca_no_chao_3  0.1f
+#define vaca_no_chao_4  1.3f
+#define vaca_tam_1 3.0f
+#define vaca_tam_2 1.0f
+#define vaca_tam_3 2.0f
+#define vaca_tam_4 4.0f
+#define vaca_tam_5 50.0f
+#define vaca_vel_1 0.06f;
+#define vaca_vel_2 0.12f;
+#define vaca_vel_3 0.09f;
+#define vaca_vel_4 0.03f;
 float pos_vaca_1 = vaca_inicial;
 float pos_vaca_2 = vaca_inicial;
 float pos_vaca_3 = vaca_inicial;
@@ -510,40 +522,40 @@ int main(int argc, char* argv[])
         DrawVirtualObject("plane");
 
         // Vaca 1
-        model = Matrix_Translate(pos_vaca_1,vaca_no_chao,0.0f);
+        model = Matrix_Translate(pos_vaca_1,vaca_no_chao_1,0.0f) * Matrix_Scale(vaca_tam_1,vaca_tam_1,vaca_tam_1);
         glUniformMatrix4fv(model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
         glUniform1i(object_id_uniform, COW);
         DrawVirtualObject("cow");
 
         // Vaca 2
-        model = Matrix_Translate(pos_vaca_2,vaca_no_chao,-1.5f);
+        model = Matrix_Translate(pos_vaca_2,vaca_no_chao_2,-1.5f) * Matrix_Scale(vaca_tam_2,vaca_tam_2,vaca_tam_2);
         glUniformMatrix4fv(model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
         glUniform1i(object_id_uniform, COW);
         DrawVirtualObject("cow");
 
         // Vaca 3
-        model = Matrix_Translate(pos_vaca_3,vaca_no_chao,1.5f);
+        model = Matrix_Translate(pos_vaca_3,vaca_no_chao_3,1.5f) * Matrix_Scale(vaca_tam_3,vaca_tam_3,vaca_tam_3);
         glUniformMatrix4fv(model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
         glUniform1i(object_id_uniform, COW);
         DrawVirtualObject("cow");
 
         // Vaca 4
-        model = Matrix_Translate(pos_vaca_4,vaca_no_chao,3.0f);
+        model = Matrix_Translate(pos_vaca_4,vaca_no_chao_4,3.0f) * Matrix_Scale(vaca_tam_4,vaca_tam_4,vaca_tam_4);
         glUniformMatrix4fv(model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
         glUniform1i(object_id_uniform, COW);
         DrawVirtualObject("cow");
 
         // Vaca 5
-        model = Matrix_Translate(pos_vaca_5,vaca_no_chao,3.0f)* Matrix_Scale(50.50f,50.0f,50.0);
+        model = Matrix_Translate(pos_vaca_5,vaca_no_chao_1,3.0f) * Matrix_Scale(vaca_tam_5,vaca_tam_5,vaca_tam_5);
         glUniformMatrix4fv(model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
         glUniform1i(object_id_uniform, COW);
         DrawVirtualObject("cow");
 
         // velocidade da vaca
-        pos_vaca_1+= 0.06f;
-        pos_vaca_2+= 0.12f;
-        pos_vaca_3+= 0.09f;
-        pos_vaca_4+= 0.03f;
+        pos_vaca_1+= vaca_vel_1;
+        pos_vaca_2+= vaca_vel_2;
+        pos_vaca_3+= vaca_vel_3;
+        pos_vaca_4+= vaca_vel_4;
 
         if ((glfwGetTime()) > 5 && (glfwGetTime()) < 300){
             PlaySound(TEXT("../../data/bgm.wav"), NULL, SND_ASYNC | SND_LOOP);
@@ -556,8 +568,7 @@ int main(int argc, char* argv[])
         if(pos_vaca_2>volta_vaca){
             pos_vaca_2 = vaca_inicial;
             vaca5++;
-            if(vaca5==1){
-                vaca5=2;
+            if(vaca5==4){
                 pos_vaca_5=-60;
                 PlaySound(TEXT("../../data/moo2.wav"), NULL, SND_ASYNC);
                 glfwSetTime(0);

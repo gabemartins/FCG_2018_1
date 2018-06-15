@@ -58,6 +58,7 @@ float pos_vaca_2 = vaca_inicial;
 float pos_vaca_3 = vaca_inicial;
 float pos_vaca_4 = vaca_inicial;
 float pos_vaca_5 = -600.0f;
+int vaca5=0;
 
 
 // Estrutura que representa um modelo geométrico carregado a partir de um
@@ -538,13 +539,16 @@ int main(int argc, char* argv[])
         glUniform1i(object_id_uniform, COW);
         DrawVirtualObject("cow");
 
-        int vaca5=0;
-
         // velocidade da vaca
         pos_vaca_1+= 0.06f;
         pos_vaca_2+= 0.12f;
         pos_vaca_3+= 0.09f;
         pos_vaca_4+= 0.03f;
+
+        if ((glfwGetTime()) > 5 && (glfwGetTime()) < 300){
+            PlaySound(TEXT("../../data/bgm.wav"), NULL, SND_ASYNC | SND_LOOP);
+            glfwSetTime(500);
+        }
 
         if(pos_vaca_1>volta_vaca){
             pos_vaca_1 = vaca_inicial;
@@ -553,9 +557,11 @@ int main(int argc, char* argv[])
             pos_vaca_2 = vaca_inicial;
             vaca5++;
             if(vaca5==1){
-                vaca5=0;
+                vaca5=2;
                 pos_vaca_5=-60;
                 PlaySound(TEXT("../../data/moo2.wav"), NULL, SND_ASYNC);
+                glfwSetTime(0);
+
             }
         }
         if(pos_vaca_3>volta_vaca){

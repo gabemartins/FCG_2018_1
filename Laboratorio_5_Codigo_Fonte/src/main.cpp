@@ -29,6 +29,8 @@
 #include <sstream>
 #include <stdexcept>
 #include <algorithm>
+#include <windows.h>
+#include <mmsystem.h>
 
 // Headers das bibliotecas OpenGL
 #include <glad/glad.h>   // Criação de contexto OpenGL 3.3
@@ -262,7 +264,7 @@ int main(int argc, char* argv[])
     // Criamos uma janela do sistema operacional, com 800 colunas e 600 linhas
     // de pixels, e com título "INF01047 ...".
     GLFWwindow* window;
-    window = glfwCreateWindow(800, 600, "INF01047 - Seu Cartao - Seu Nome", NULL, NULL);
+    window = glfwCreateWindow(800, 600, "Frogger soh que eh vaca", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -361,6 +363,9 @@ int main(int argc, char* argv[])
     glm::mat4 the_projection;
     glm::mat4 the_model;
     glm::mat4 the_view;
+
+    // MUSIC - BGM
+    PlaySound(TEXT("../../data/bgm.wav"), NULL, SND_ASYNC | SND_LOOP);
 
     // Ficamos em loop, renderizando, até que o usuário feche a janela
     while (!glfwWindowShouldClose(window))
@@ -462,10 +467,10 @@ int main(int argc, char* argv[])
 
         // Desenhamos o modelo da esfera
         model = Matrix_Translate(0.0f,0.0f,0.0f)
-              * Matrix_Scale(50.0f,50.0f,50.0)
-              * Matrix_Rotate_Z(0.2f)
+              * Matrix_Scale(50.50f,50.0f,50.0)
+           /* * Matrix_Rotate_Z(0.6f)
               * Matrix_Rotate_X(0.2f)
-              * Matrix_Rotate_Y(g_AngleY) /*+ (float)glfwGetTime() * 0.1f)*/;
+              * Matrix_Rotate_Y(g_AngleY + (float)glfwGetTime() * 0.1f) */;
         glUniformMatrix4fv(model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
         glUniform1i(object_id_uniform, SPHERE);
         DrawVirtualObject("sphere");

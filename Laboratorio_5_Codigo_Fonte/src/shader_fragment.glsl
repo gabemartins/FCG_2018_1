@@ -122,8 +122,8 @@ void main()
         // PREENCHA AQUI
         // Propriedades espectrais do coelho
         Kdif = vec3(0.58, 0.4, 0.1);
-        Ks = vec3(0.9, 0.9, 0.0);
-        Ka = vec3(0.54,0.2,0.4);
+        Ks = vec3(4.0, 4.0, 0.0);
+        Ka = vec3(0.1,0.1,0.1);
         q = 32.0;
 
 

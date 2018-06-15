@@ -1667,7 +1667,7 @@
 	<inttypes.h>
 	<stdint.h>
 
-1529018713 source:c:\users\ric\documents\github\fcg_2018_1\laboratorio_5_codigo_fonte\src\main.cpp
+1529096808 source:c:\users\ric\documents\github\fcg_2018_1\laboratorio_5_codigo_fonte\src\main.cpp
 	<cmath>
 	<cstdio>
 	<cstdlib>
@@ -1680,6 +1680,8 @@
 	<sstream>
 	<stdexcept>
 	<algorithm>
+	<windows.h>
+	<mmsystem.h>
 	<glad/glad.h>
 	<GLFW/glfw3.h>
 	<glm/mat4x4.hpp>

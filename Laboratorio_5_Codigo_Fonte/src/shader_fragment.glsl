@@ -24,6 +24,7 @@ uniform mat4 projection;
 #define PLANE  2
 #define COW 3
 #define FENCE 4
+#define HOUSE 5
 uniform int object_id;
 
 // Parâmetros da axis-aligned bounding box (AABB) do modelo
@@ -38,6 +39,7 @@ uniform sampler2D TextureImage3;
 uniform sampler2D TextureImage4;
 uniform sampler2D TextureImage5;
 uniform sampler2D TextureImage6;
+uniform sampler2D TextureImage7;
 
 // O valor de saída ("out") de um Fragment Shader é a cor final do fragmento.
 out vec3 color;
@@ -143,6 +145,28 @@ void main()
         V = (position_model.y - miny)/(maxy - miny);
     }
 
+    else if ( object_id == HOUSE )
+    {
+
+        Kdif = vec3(0.58, 0.4, 0.1);
+        Ks = vec3(4.0, 4.0, 0.0);
+        Ka = vec3(0.1,0.1,0.1);
+        q = 32.0;
+
+        float minx = bbox_min.x;
+        float maxx = bbox_max.x;
+
+        float miny = bbox_min.y;
+        float maxy = bbox_max.y;
+
+        float minz = bbox_min.z;
+        float maxz = bbox_max.z;
+
+
+
+        U = (position_model.x - minx)/(maxx - minx);
+        V = (position_model.y - miny)/(maxy - miny);
+    }
     else if ( object_id == COW )
     {
 
@@ -195,6 +219,7 @@ void main()
     vec3 Kd3 = texture(TextureImage3, vec2(U,V)).rgb;
     vec3 Kd4 = texture(TextureImage4, vec2(U,V)).rgb;
     vec3 Kd_vaca = texture(TextureImage5, vec2(U,V)).rgb;
+    vec3 Kd_casa = texture(TextureImage7,vec2(U,V)).rgb;
 
     // Equação de Iluminação
 
@@ -202,7 +227,7 @@ void main()
     vec3 I = vec3(1.0,1.0,1.0); // PREENCH AQUI o espectro da fonte de luz
 
     // Espectro da luz ambiente
-    vec3 Ia = vec3(0.2,0.2,0.2); // PREENCHA AQUI o espectro da luz ambiente
+    vec3 Ia = vec3(0.2,0.1,0.0); // PREENCHA AQUI o espectro da luz ambiente
 
     // Termo difuso utilizando a lei dos cossenos de Lambert
     vec3 lambert_diffuse_term = Kdif*I*max(0,dot(n,l)); // PREENCHA AQUI o termo difuso de Lambert
@@ -238,6 +263,10 @@ void main()
     else if (object_id == FENCE)
     {
     color = (Kd4 * (lambert + 0.5));
+    }
+    else if (object_id == HOUSE)
+    {
+    color = (Kd_casa * (lambert - 0.1))+ ambient_term;
     }
 
 

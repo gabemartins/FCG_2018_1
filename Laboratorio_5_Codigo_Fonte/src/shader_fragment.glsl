@@ -266,7 +266,7 @@ void main()
     }
     else if (object_id == HOUSE)
     {
-    color = (Kd_casa * (lambert - 0.1))+ ambient_term;
+    color = (Kd_casa * (lambert - 0.2))+ ambient_term;
     }
 
 

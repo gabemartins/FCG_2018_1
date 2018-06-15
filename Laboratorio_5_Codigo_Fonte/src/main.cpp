@@ -50,9 +50,15 @@
 #include "utils.h"
 #include "matrices.h"
 
-#define vaca_inicial 5.0f
+#define vaca_inicial -20.0f
 #define vaca_no_chao -0.5f
-float pos_vaca = vaca_inicial;
+#define volta_vaca 30.0f
+float pos_vaca_1 = vaca_inicial;
+float pos_vaca_2 = vaca_inicial;
+float pos_vaca_3 = vaca_inicial;
+float pos_vaca_4 = vaca_inicial;
+float pos_vaca_5 = -600.0f;
+
 
 // Estrutura que representa um modelo geométrico carregado a partir de um
 // arquivo ".obj". Veja https://en.wikipedia.org/wiki/Wavefront_.obj_file .
@@ -501,16 +507,62 @@ int main(int argc, char* argv[])
         glUniformMatrix4fv(model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
         glUniform1i(object_id_uniform, PLANE);
         DrawVirtualObject("plane");
-        //VACA
-        model = Matrix_Translate(pos_vaca,vaca_no_chao,0.0f);
+
+        // Vaca 1
+        model = Matrix_Translate(pos_vaca_1,vaca_no_chao,0.0f);
         glUniformMatrix4fv(model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
         glUniform1i(object_id_uniform, COW);
         DrawVirtualObject("cow");
 
+        // Vaca 2
+        model = Matrix_Translate(pos_vaca_2,vaca_no_chao,-1.5f);
+        glUniformMatrix4fv(model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
+        glUniform1i(object_id_uniform, COW);
+        DrawVirtualObject("cow");
+
+        // Vaca 3
+        model = Matrix_Translate(pos_vaca_3,vaca_no_chao,1.5f);
+        glUniformMatrix4fv(model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
+        glUniform1i(object_id_uniform, COW);
+        DrawVirtualObject("cow");
+
+        // Vaca 4
+        model = Matrix_Translate(pos_vaca_4,vaca_no_chao,3.0f);
+        glUniformMatrix4fv(model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
+        glUniform1i(object_id_uniform, COW);
+        DrawVirtualObject("cow");
+
+        // Vaca 5
+        model = Matrix_Translate(pos_vaca_5,vaca_no_chao,3.0f)* Matrix_Scale(50.50f,50.0f,50.0);
+        glUniformMatrix4fv(model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
+        glUniform1i(object_id_uniform, COW);
+        DrawVirtualObject("cow");
+
+        int vaca5=0;
+
         // velocidade da vaca
-        pos_vaca+= 0.02f;
-        if(pos_vaca>10.0f){
-            pos_vaca = vaca_inicial;
+        pos_vaca_1+= 0.06f;
+        pos_vaca_2+= 0.12f;
+        pos_vaca_3+= 0.09f;
+        pos_vaca_4+= 0.03f;
+
+        if(pos_vaca_1>volta_vaca){
+            pos_vaca_1 = vaca_inicial;
+        }
+        if(pos_vaca_2>volta_vaca){
+            pos_vaca_2 = vaca_inicial;
+            vaca5++;
+            if(vaca5==1){
+                vaca5=0;
+                pos_vaca_5=-60;
+                PlaySound(TEXT("../../data/moo2.wav"), NULL, SND_ASYNC);
+            }
+        }
+        if(pos_vaca_3>volta_vaca){
+            pos_vaca_3 = vaca_inicial;
+        }
+        if(pos_vaca_4>volta_vaca){
+            pos_vaca_4 = vaca_inicial;
         }
 
 

@@ -122,7 +122,7 @@ void main()
         // PREENCHA AQUI
         // Propriedades espectrais do coelho
         Kdif = vec3(0.58, 0.4, 0.1);
-        Ks = vec3(0.0, 0.0, 0.0);
+        Ks = vec3(0.9, 0.9, 0.0);
         Ka = vec3(0.54,0.2,0.4);
         q = 32.0;
 
@@ -225,7 +225,7 @@ void main()
     }
     else if (object_id == BUNNY)
     {
-    color = (Kd0 * (lambert + 0.01) + ambient_term)+ phong_specular_term;
+    color = (Kd0 * (lambert + 0.01))+ phong_specular_term;
     }
     else if (object_id == PLANE)
     {

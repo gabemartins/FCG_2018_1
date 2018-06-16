@@ -251,8 +251,8 @@ void free_view_control(float step)
 
             if (isoutofbounds(g_CameraX,g_CameraZ))
             {
-                g_CameraX = g_CameraX;
-                g_CameraZ = g_CameraZ;
+                g_CameraX -= left.x*(-step);
+                g_CameraZ -= left.z*(-step);
             }
             else
             {
@@ -269,8 +269,8 @@ void free_view_control(float step)
         {
             if (isoutofbounds(g_CameraX,g_CameraZ))
             {
-                g_CameraX = g_CameraX;
-                g_CameraZ = g_CameraZ;
+                g_CameraX -= left.x*(-step);
+                g_CameraZ -= left.z*(-step);
             }
             else{
 			//mover para direita
@@ -286,8 +286,8 @@ void free_view_control(float step)
         {
             if (isoutofbounds(g_CameraX,g_CameraZ))
             {
-                g_CameraX = g_CameraX;
-                g_CameraZ = g_CameraZ;
+                g_CameraX -= left.x*(-step);
+                g_CameraZ -= left.z*(-step);
             }
             else
             {
@@ -307,8 +307,8 @@ void free_view_control(float step)
         {
             if (isoutofbounds(g_CameraX,g_CameraZ))
             {
-                g_CameraX = g_CameraX;
-                g_CameraZ = g_CameraZ;
+                g_CameraX -= left.x*(-step);
+                g_CameraZ -= left.z*(-step);
             }
             else
             {

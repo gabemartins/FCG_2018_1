@@ -441,10 +441,10 @@ int main(int argc, char* argv[])
         // controladas pelo mouse do usuário. Veja as funções CursorPosCallback()
         // e ScrollCallback().
 
-        float r = g_CameraDistance;
-        float y = r*sin(g_CameraPhi);
-        float z = r*cos(g_CameraPhi)*cos(g_CameraTheta);
-        float x = r*cos(g_CameraPhi)*sin(g_CameraTheta);
+        //float r = g_CameraDistance;
+        //float y = r*sin(g_CameraPhi);
+        //float z = r*cos(g_CameraPhi)*cos(g_CameraTheta);
+        //float x = r*cos(g_CameraPhi)*sin(g_CameraTheta);
 
         float y_f = sin(g_CameraPhi);
         float z_f = cos(g_CameraPhi)*cos(g_CameraTheta);

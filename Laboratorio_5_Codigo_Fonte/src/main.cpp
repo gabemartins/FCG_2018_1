@@ -5,7 +5,12 @@
 //    INF01047 Fundamentos de Computação Gráfica
 //               Prof. Eduardo Gastal
 //
-//                   LABORATÓRIO 5
+//                   Trabalho Final
+//
+//                    Cows in Space
+//
+//          Grupo: Gabriel Martins e Ricardo Belo
+//
 //
 
 // Arquivos "headers" padrões de C podem ser incluídos em um
@@ -75,7 +80,6 @@ float pos_vaca_5 = -600.0f;
 int vaca5=0;
 int nivel=1;
 bool gameover = false;
-
 
 
 // Estrutura que representa um modelo geométrico carregado a partir de um
@@ -427,6 +431,7 @@ void free_view_control(float step)
             }
 		}
 }
+
 int main(int argc, char* argv[])
 {
     // Inicializamos a biblioteca GLFW, utilizada para criar uma janela do
@@ -1602,6 +1607,7 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mod)
     //   Se apertar tecla Z       então g_AngleZ += delta;
     //   Se apertar tecla shift+Z então g_AngleZ -= delta;
 
+    /*
     float delta = 3.141592 / 16; // 22.5 graus, em radianos.
 
     if (key == GLFW_KEY_X && action == GLFW_PRESS)
@@ -1617,9 +1623,10 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mod)
     {
         g_AngleZ += (mod & GLFW_MOD_SHIFT) ? -delta : delta;
     }
+    */
 
     // Se o usuário apertar a tecla espaço, resetamos os ângulos de Euler para zero.
-    if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
+    /*if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
     {
         g_AngleX = 0.0f;
         g_AngleY = 0.0f;
@@ -1628,7 +1635,7 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mod)
         g_ForearmAngleZ = 0.0f;
         g_TorsoPositionX = 0.0f;
         g_TorsoPositionY = 0.0f;
-    }
+    }*/
 
     // Se o usuário apertar a tecla P, utilizamos projeção perspectiva.
     if (key == GLFW_KEY_P && action == GLFW_PRESS)
@@ -1643,10 +1650,10 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mod)
     }
 
     // Se o usuário apertar a tecla H, fazemos um "toggle" do texto informativo mostrado na tela.
-    if (key == GLFW_KEY_H && action == GLFW_PRESS)
+    /*if (key == GLFW_KEY_H && action == GLFW_PRESS)
     {
         g_ShowInfoText = !g_ShowInfoText;
-    }
+    }*/
 
     // Se o usuário apertar a tecla R, recarregamos os shaders dos arquivos "shader_fragment.glsl" e "shader_vertex.glsl".
     if (key == GLFW_KEY_R && action == GLFW_PRESS)
@@ -1692,8 +1699,6 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mod)
     {
         g_SKeyPressed = false;
     }
-
-
 
 }
 

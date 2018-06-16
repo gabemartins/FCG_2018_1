@@ -171,8 +171,6 @@ void main()
         float minz = bbox_min.z;
         float maxz = bbox_max.z;
 
-
-
         U = (position_model.x - minx)/(maxx - minx);
         V = (position_model.y - miny)/(maxy - miny);
     }
@@ -187,8 +185,6 @@ void main()
 
         float minz = bbox_min.z;
         float maxz = bbox_max.z;
-
-
 
         U = (position_model.x - minx)/(maxx - minx);
         V = (position_model.y - miny)/(maxy - miny);
@@ -217,15 +213,10 @@ void main()
         float minz = bbox_min.z;
         float maxz = bbox_max.z;
 
-
-
         U = (position_model.x - minx)/(maxx - minx);
         V = (position_model.y - miny)/(maxy - miny);
 
     }
-
-
-
 
     // Obtemos a refletância difusa a partir da leitura da imagem TextureImage0
     vec3 Kd0 = texture(TextureImage6, vec2(U,V)).rgb;

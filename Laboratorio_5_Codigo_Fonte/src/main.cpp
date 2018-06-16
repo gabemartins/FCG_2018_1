@@ -18,6 +18,7 @@
 #include <cmath>
 #include <cstdio>
 #include <cstdlib>
+#include <iostream>
 
 // Headers abaixo são específicos de C++
 #include <map>
@@ -249,6 +250,10 @@ void free_view_control(float step)
             g_CameraX += viewD.x*step;
             //g_CameraY += viewD.y*step;
             g_CameraZ += viewD.z*step;
+
+            std::cout << "X: " << g_CameraX << "\n";
+            std::cout << "Y: " << g_CameraY << "\n";
+            std::cout << "Z: " << g_CameraZ << "\n-----------------\n";
 		}
         if  (g_SKeyPressed)
         {

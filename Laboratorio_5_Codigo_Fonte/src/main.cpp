@@ -223,12 +223,29 @@ GLint bbox_max_uniform;
 
 // Número de texturas carregadas pela função LoadTextureImage()
 GLuint g_NumLoadedTextures = 0;
-float g_CameraX = 3.0f, g_CameraY = 0.0f, g_CameraZ = 12.0f;
 
+#define player_initial_pos_x 3.0f
+#define player_initial_pos_y 0.0f
+#define player_initial_pos_z 12.0f
+
+#define game_over_pos_x 0.0f
+#define game_over_pos_y 0.0f
+#define game_over_pos_z 0.0f
+
+// Define a poiscao inicial da camera - player
+float g_CameraX = player_initial_pos_x, g_CameraY = player_initial_pos_y, g_CameraZ = player_initial_pos_z;
+
+void move_player(float pos_X, float pos_Y, float pos_Z)
+{
+    g_CameraX = pos_X;
+    g_CameraY = pos_Y;
+    g_CameraZ = pos_Z;
+
+}
 
 // Efeito de andar
 int up = 1;
-int flag=0;
+int walk_flag = 0;
 #define step_number 12
 #define up_value 0.005f;
 void walkeffect()
@@ -236,20 +253,20 @@ void walkeffect()
     if(up==1)
     {
         g_CameraY += up_value;
-        flag++;
-        if(flag > step_number)
+        walk_flag++;
+        if(walk_flag > step_number)
         {
-            flag = 0;
+            walk_flag = 0;
             up = 0;
         }
     }
     else
     {
         g_CameraY += -up_value;
-        flag++;
-        if(flag > step_number)
+        walk_flag++;
+        if(walk_flag > step_number)
         {
-            flag = 0;
+            walk_flag = 0;
             up = 1;
         }
     }

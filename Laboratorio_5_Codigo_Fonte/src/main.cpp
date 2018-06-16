@@ -51,6 +51,7 @@
 #include "utils.h"
 #include "matrices.h"
 
+#define vel_nivel 0.01f
 #define volta_vaca 30.0f
 #define vaca_inicial -20.0f
 #define vaca_no_chao_1  0.7f
@@ -62,17 +63,19 @@
 #define vaca_tam_3 2.0f
 #define vaca_tam_4 4.0f
 #define vaca_tam_5 50.0f
-#define vaca_vel_1 0.06f;
-#define vaca_vel_2 0.12f;
-#define vaca_vel_3 0.09f;
-#define vaca_vel_4 0.03f;
+float vaca_vel_1 = 0.06f;
+float vaca_vel_2 = 0.12f;
+float vaca_vel_3 = 0.09f;
+float vaca_vel_4 = 0.03f;
 float pos_vaca_1 = vaca_inicial;
 float pos_vaca_2 = vaca_inicial;
 float pos_vaca_3 = vaca_inicial;
 float pos_vaca_4 = vaca_inicial;
 float pos_vaca_5 = -600.0f;
 int vaca5=0;
+int nivel=1;
 bool gameover = false;
+
 
 
 // Estrutura que representa um modelo geométrico carregado a partir de um
@@ -282,6 +285,16 @@ void print_coord()
     std::cout << "Z: " << g_CameraZ << "\n-----------------\n";
 }
 
+void aumenta_nivel()
+{
+    nivel++;
+    vaca_vel_1 += vel_nivel;
+    vaca_vel_2 += vel_nivel;
+    vaca_vel_3 += vel_nivel;
+    vaca_vel_4 += vel_nivel;
+
+}
+
 // Logica de Colisoes
 bool isoutofbounds (float x,float z)
 {
@@ -316,7 +329,7 @@ bool hitcoelho (float x, float z)
         {
         return true;
         }
-        else false;
+        else return false;
 }
 
 
@@ -345,6 +358,7 @@ void free_view_control(float step)
             if (hitcoelho (g_CameraX, g_CameraZ))
             {
                 gameover = true;
+                aumenta_nivel();
             }
             else
             {
@@ -363,6 +377,7 @@ void free_view_control(float step)
             if (hitcoelho (g_CameraX, g_CameraZ))
             {
                 gameover = true;
+                aumenta_nivel();
             }
             else
             {
@@ -381,6 +396,7 @@ void free_view_control(float step)
             if (hitcoelho (g_CameraX, g_CameraZ))
             {
                 gameover = true;
+                aumenta_nivel();
             }
             else
             {
@@ -400,6 +416,7 @@ void free_view_control(float step)
             if (hitcoelho (g_CameraX, g_CameraZ))
             {
                 gameover = true;
+                aumenta_nivel();
             }
             else
             {

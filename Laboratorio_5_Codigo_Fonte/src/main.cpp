@@ -316,7 +316,7 @@ bool hitcoelho (float x, float z)
         {
         return true;
         }
-        else false;
+        else return false;
 }
 
 
@@ -492,6 +492,7 @@ int main(int argc, char* argv[])
     LoadTextureImage("../../data/house2.jpg");//TextureImage8
     LoadTextureImage("../../data/house3.jpg");//TextureImage9
     LoadTextureImage("../../data/house4.jpg");//TextureImage10
+    LoadTextureImage("../../data/gameover.png");//TextureImage11
 
     // Construímos a representação de objetos geométricos através de malhas de triângulos
     ObjModel spheremodel("../../data/sphere.obj");
@@ -545,6 +546,7 @@ int main(int argc, char* argv[])
 
     // MUSIC - BGM
     PlaySound(TEXT("../../data/bgm.wav"), NULL, SND_ASYNC | SND_LOOP);
+    int picked_bunnies = 0;
 
     // Ficamos em loop, renderizando, até que o usuário feche a janela
     while (!glfwWindowShouldClose(window))
@@ -647,6 +649,7 @@ int main(int argc, char* argv[])
         #define HOUSE2 6
         #define HOUSE3 7
         #define HOUSE4 8
+        #define GAMEOVER 9
 
         // Desenhamos o modelo da esfera
         model = Matrix_Translate(0.0f,0.0f,0.0f)
@@ -696,6 +699,13 @@ int main(int argc, char* argv[])
                 * Matrix_Scale (50.0f,50.0f,50.0f);
         glUniformMatrix4fv(model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
         glUniform1i(object_id_uniform, PLANE);
+        DrawVirtualObject("plane");
+        //PLANE GAME OVER
+        model = Matrix_Translate(400.0f,0.0f,396.0f)
+                * Matrix_Scale (1.5f,1.5f,1.5f)
+                * Matrix_Rotate_X(-4.65f);
+        glUniformMatrix4fv(model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
+        glUniform1i(object_id_uniform, GAMEOVER);
         DrawVirtualObject("plane");
 
         // Vaca 1
@@ -850,12 +860,20 @@ int main(int argc, char* argv[])
         }
         else
         {
-        move_player(player_initial_pos_x, g_CameraY, player_initial_pos_z);
-        gameover = false;
-        g_CameraPhi = 0.0f;
-        g_CameraTheta = 0.0f;
+        if (picked_bunnies < 3 /*nr de coelhos*/)
+        {
+            move_player(player_initial_pos_x, g_CameraY, player_initial_pos_z);
+            gameover = false;
+            g_CameraPhi = 0.0f;
+            g_CameraTheta = 0.0f;
+            picked_bunnies ++;
+        }
+        else
+        {
+                move_player(400.0f,g_CameraY,400.0f);
         }
     }
+}
 
     // Finalizamos o uso dos recursos do sistema operacional
     glfwTerminate();
@@ -1006,6 +1024,7 @@ void LoadShadersFromFiles()
     glUniform1i(glGetUniformLocation(program_id, "TextureImage8"), 8);
     glUniform1i(glGetUniformLocation(program_id, "TextureImage9"), 9);
     glUniform1i(glGetUniformLocation(program_id, "TextureImage10"), 10);
+    glUniform1i(glGetUniformLocation(program_id, "TextureImage11"), 11);
     glUseProgram(0);
 }
 

@@ -28,6 +28,7 @@ uniform mat4 projection;
 #define HOUSE2 6
 #define HOUSE3 7
 #define HOUSE4 8
+#define GAMEOVER 9
 uniform int object_id;
 
 // Parâmetros da axis-aligned bounding box (AABB) do modelo
@@ -46,6 +47,7 @@ uniform sampler2D TextureImage7;
 uniform sampler2D TextureImage8;
 uniform sampler2D TextureImage9;
 uniform sampler2D TextureImage10;
+uniform sampler2D TextureImage11;
 
 
 // O valor de saída ("out") de um Fragment Shader é a cor final do fragmento.
@@ -198,6 +200,12 @@ void main()
         U = texcoords.x;
         V = texcoords.y;
     }
+    else if ( object_id == GAMEOVER )
+    {
+        // Coordenadas de textura do plano, obtidas do arquivo OBJ.
+        U = texcoords.x;
+        V = texcoords.y;
+    }
     else if ( object_id == FENCE )
     {
         float minx = bbox_min.x;
@@ -230,6 +238,7 @@ void main()
     vec3 Kd_casa2 = texture(TextureImage8,vec2(U,V)).rgb;
     vec3 Kd_casa3 = texture(TextureImage9,vec2(U,V)).rgb;
     vec3 Kd_casa4 = texture(TextureImage10,vec2(U,V)).rgb;
+    vec3 Kd_gameover = texture(TextureImage11, vec2(U,V)).rgb;
 
     // Equação de Iluminação
 
@@ -289,6 +298,10 @@ void main()
     else if (object_id == HOUSE4)
     {
     color = (Kd_casa4 * (lambert + 0.2));
+    }
+    else if (object_id == GAMEOVER)
+    {
+    color = (Kd_gameover * (lambert + 0.2));
     }
 
 

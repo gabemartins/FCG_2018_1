@@ -457,7 +457,7 @@ int main(int argc, char* argv[])
     // Criamos uma janela do sistema operacional, com 1024 colunas e 768 linhas
     // de pixels, e com título "INF01047 ...".
     GLFWwindow* window;
-    window = glfwCreateWindow(1024, 768, "Frogger soh que eh vaca", NULL, NULL);
+    window = glfwCreateWindow(1024, 768, "Cows in Space", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -777,7 +777,7 @@ int main(int argc, char* argv[])
         if(pos_vaca_2>volta_vaca){
             pos_vaca_2 = vaca_inicial;
             vaca5++;
-            if(vaca5==5){
+            if(vaca5==7){
                 pos_vaca_5=-60;
                 if(!gameover)
                 {
@@ -895,7 +895,7 @@ int main(int argc, char* argv[])
         }
         else
         {
-                move_player(400.0f,g_CameraY,400.0f);
+            move_player(400.0f,g_CameraY,400.0f);
         }
     }
 }
@@ -1607,7 +1607,7 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mod)
     //   Se apertar tecla Z       então g_AngleZ += delta;
     //   Se apertar tecla shift+Z então g_AngleZ -= delta;
 
-    /*
+
     float delta = 3.141592 / 16; // 22.5 graus, em radianos.
 
     if (key == GLFW_KEY_X && action == GLFW_PRESS)
@@ -1623,10 +1623,10 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mod)
     {
         g_AngleZ += (mod & GLFW_MOD_SHIFT) ? -delta : delta;
     }
-    */
+
 
     // Se o usuário apertar a tecla espaço, resetamos os ângulos de Euler para zero.
-    /*if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
+    if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
     {
         g_AngleX = 0.0f;
         g_AngleY = 0.0f;
@@ -1635,7 +1635,7 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mod)
         g_ForearmAngleZ = 0.0f;
         g_TorsoPositionX = 0.0f;
         g_TorsoPositionY = 0.0f;
-    }*/
+    }
 
     // Se o usuário apertar a tecla P, utilizamos projeção perspectiva.
     if (key == GLFW_KEY_P && action == GLFW_PRESS)
@@ -1650,10 +1650,10 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mod)
     }
 
     // Se o usuário apertar a tecla H, fazemos um "toggle" do texto informativo mostrado na tela.
-    /*if (key == GLFW_KEY_H && action == GLFW_PRESS)
+    if (key == GLFW_KEY_H && action == GLFW_PRESS)
     {
         g_ShowInfoText = !g_ShowInfoText;
-    }*/
+    }
 
     // Se o usuário apertar a tecla R, recarregamos os shaders dos arquivos "shader_fragment.glsl" e "shader_vertex.glsl".
     if (key == GLFW_KEY_R && action == GLFW_PRESS)

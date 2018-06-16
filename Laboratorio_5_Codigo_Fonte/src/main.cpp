@@ -228,7 +228,7 @@ float g_CameraX = 3.0f, g_CameraY = 0.0f, g_CameraZ = 12.0f;
 //COLISOES!!! WOO!
 bool isoutofbounds (float x,float z)
 {
-    if ((x<=-40)||(x>=40)||(z>=40)||(z<=-40))
+    if ((x<=-25)||(x>=25)||(z>=25)||(z<=-25))
     {
         return true;
     }
@@ -251,8 +251,8 @@ void free_view_control(float step)
 
             if (isoutofbounds(g_CameraX,g_CameraZ))
             {
-                g_CameraX -= left.x*(-step);
-                g_CameraZ -= left.z*(-step);
+                g_CameraX -= left.x*5*(-step);
+                g_CameraZ -= left.z*5*(-step);
             }
             else
             {
@@ -269,8 +269,8 @@ void free_view_control(float step)
         {
             if (isoutofbounds(g_CameraX,g_CameraZ))
             {
-                g_CameraX -= left.x*(-step);
-                g_CameraZ -= left.z*(-step);
+                g_CameraX += left.x*5*(-step);
+                g_CameraZ += left.z*5*(-step);
             }
             else{
 			//mover para direita
@@ -286,8 +286,8 @@ void free_view_control(float step)
         {
             if (isoutofbounds(g_CameraX,g_CameraZ))
             {
-                g_CameraX -= left.x*(-step);
-                g_CameraZ -= left.z*(-step);
+                g_CameraX += viewD.x*5*(-step);
+                g_CameraZ += viewD.z*5*(-step);
             }
             else
             {
@@ -307,8 +307,8 @@ void free_view_control(float step)
         {
             if (isoutofbounds(g_CameraX,g_CameraZ))
             {
-                g_CameraX -= left.x*(-step);
-                g_CameraZ -= left.z*(-step);
+                g_CameraX -= viewD.x*5*(-step);
+                g_CameraZ -= viewD.z*5*(-step);
             }
             else
             {

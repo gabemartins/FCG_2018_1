@@ -224,6 +224,20 @@ GLint bbox_max_uniform;
 // Número de texturas carregadas pela função LoadTextureImage()
 GLuint g_NumLoadedTextures = 0;
 float g_CameraX = 3.0f, g_CameraY = 0.0f, g_CameraZ = 12.0f;
+
+//COLISOES!!! WOO!
+bool isoutofbounds (float x,float z)
+{
+    if ((x<=-40)||(x>=40)||(z>=40)||(z<=-40))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 void free_view_control(float step)
 {
         float y = sin(g_CameraPhi);
@@ -234,10 +248,18 @@ void free_view_control(float step)
 
         if  (g_AKeyPressed)
         {
+
+            if (isoutofbounds(g_CameraX,g_CameraZ))
+            {
+                g_CameraX = g_CameraX;
+                g_CameraZ = g_CameraZ;
+            }
+            else
+            {
 			//mover para esquerda
 			g_CameraX -= left.x*step;
 			g_CameraZ -= left.z*step;
-
+            }
 			// Printa coordenadas no console
             std::cout << "X: " << g_CameraX << "\n";
             std::cout << "Y: " << g_CameraY << "\n";
@@ -245,10 +267,16 @@ void free_view_control(float step)
 		}
         if  (g_DKeyPressed)
         {
+            if (isoutofbounds(g_CameraX,g_CameraZ))
+            {
+                g_CameraX = g_CameraX;
+                g_CameraZ = g_CameraZ;
+            }
+            else{
 			//mover para direita
 			g_CameraX += left.x*step;
 			g_CameraZ += left.z*step;
-
+            }
             // Printa coordenadas no console
             std::cout << "X: " << g_CameraX << "\n";
             std::cout << "Y: " << g_CameraY << "\n";
@@ -256,11 +284,20 @@ void free_view_control(float step)
 		}
         if  (g_WKeyPressed)
         {
+            if (isoutofbounds(g_CameraX,g_CameraZ))
+            {
+                g_CameraX = g_CameraX;
+                g_CameraZ = g_CameraZ;
+            }
+            else
+            {
+
+
 			//mover para frente
             g_CameraX += viewD.x*step;
             //g_CameraY += viewD.y*step;
             g_CameraZ += viewD.z*step;
-
+            }
             // Printa coordenadas no console
             std::cout << "X: " << g_CameraX << "\n";
             std::cout << "Y: " << g_CameraY << "\n";
@@ -268,11 +305,20 @@ void free_view_control(float step)
 		}
         if  (g_SKeyPressed)
         {
+            if (isoutofbounds(g_CameraX,g_CameraZ))
+            {
+                g_CameraX = g_CameraX;
+                g_CameraZ = g_CameraZ;
+            }
+            else
+            {
+
+
 			//mover para tras
             g_CameraX -= viewD.x*step;
             //g_CameraY -= viewD.y*step;
             g_CameraZ -= viewD.z*step;
-
+            }
             // Printa coordenadas no console
             std::cout << "X: " << g_CameraX << "\n";
             std::cout << "Y: " << g_CameraY << "\n";

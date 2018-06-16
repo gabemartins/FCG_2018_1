@@ -225,7 +225,46 @@ GLint bbox_max_uniform;
 GLuint g_NumLoadedTextures = 0;
 float g_CameraX = 3.0f, g_CameraY = 0.0f, g_CameraZ = 12.0f;
 
-//COLISOES!!! WOO!
+
+// Efeito de andar
+int up = 1;
+int flag=0;
+#define step_number 12
+#define up_value 0.005f;
+void walkeffect()
+{
+    if(up==1)
+    {
+        g_CameraY += up_value;
+        flag++;
+        if(flag > step_number)
+        {
+            flag = 0;
+            up = 0;
+        }
+    }
+    else
+    {
+        g_CameraY += -up_value;
+        flag++;
+        if(flag > step_number)
+        {
+            flag = 0;
+            up = 1;
+        }
+    }
+
+}
+
+void print_coord()
+{
+    // Printa coordenadas da camera no console
+    std::cout << "X: " << g_CameraX << "\n";
+    std::cout << "Y: " << g_CameraY << "\n";
+    std::cout << "Z: " << g_CameraZ << "\n-----------------\n";
+}
+
+// Logica de Colisoes
 bool isoutofbounds (float x,float z)
 {
     //Bounds do mapa
@@ -258,6 +297,7 @@ bool isoutofbounds (float x,float z)
     }
 }
 
+// Camera - Player Control
 void free_view_control(float step)
 {
         float y = sin(g_CameraPhi);
@@ -266,9 +306,14 @@ void free_view_control(float step)
 		glm::vec4 viewD = glm::vec4(-x,-y,-z, 0.0f);
 		glm::vec4 left = viewD * Matrix_Rotate_Y(3.141592f/2);
 
+		if (g_AKeyPressed || g_SKeyPressed || g_DKeyPressed || g_WKeyPressed)
+        {
+            print_coord();
+            walkeffect();
+        }
+
         if  (g_AKeyPressed)
         {
-
             if (isoutofbounds(g_CameraX,g_CameraZ))
             {
                 g_CameraX -= left.x*5*(-step);
@@ -276,14 +321,10 @@ void free_view_control(float step)
             }
             else
             {
-			//mover para esquerda
-			g_CameraX -= left.x*step;
-			g_CameraZ -= left.z*step;
+                //mover para esquerda
+                g_CameraX -= left.x*step;
+                g_CameraZ -= left.z*step;
             }
-			// Printa coordenadas no console
-            std::cout << "X: " << g_CameraX << "\n";
-            std::cout << "Y: " << g_CameraY << "\n";
-            std::cout << "Z: " << g_CameraZ << "\n-----------------\n";
 		}
         if  (g_DKeyPressed)
         {
@@ -292,15 +333,12 @@ void free_view_control(float step)
                 g_CameraX += left.x*5*(-step);
                 g_CameraZ += left.z*5*(-step);
             }
-            else{
-			//mover para direita
-			g_CameraX += left.x*step;
-			g_CameraZ += left.z*step;
+            else
+            {
+                //mover para direita
+                g_CameraX += left.x*step;
+                g_CameraZ += left.z*step;
             }
-            // Printa coordenadas no console
-            std::cout << "X: " << g_CameraX << "\n";
-            std::cout << "Y: " << g_CameraY << "\n";
-            std::cout << "Z: " << g_CameraZ << "\n-----------------\n";
 		}
         if  (g_WKeyPressed)
         {
@@ -311,17 +349,11 @@ void free_view_control(float step)
             }
             else
             {
-
-
-			//mover para frente
-            g_CameraX += viewD.x*step;
-            //g_CameraY += viewD.y*step;
-            g_CameraZ += viewD.z*step;
+                //mover para frente
+                g_CameraX += viewD.x*step;
+                //g_CameraY += viewD.y*step;
+                g_CameraZ += viewD.z*step;
             }
-            // Printa coordenadas no console
-            std::cout << "X: " << g_CameraX << "\n";
-            std::cout << "Y: " << g_CameraY << "\n";
-            std::cout << "Z: " << g_CameraZ << "\n-----------------\n";
 		}
         if  (g_SKeyPressed)
         {
@@ -332,17 +364,11 @@ void free_view_control(float step)
             }
             else
             {
-
-
-			//mover para tras
-            g_CameraX -= viewD.x*step;
-            //g_CameraY -= viewD.y*step;
-            g_CameraZ -= viewD.z*step;
+                //mover para tras
+                g_CameraX -= viewD.x*step;
+                //g_CameraY -= viewD.y*step;
+                g_CameraZ -= viewD.z*step;
             }
-            // Printa coordenadas no console
-            std::cout << "X: " << g_CameraX << "\n";
-            std::cout << "Y: " << g_CameraY << "\n";
-            std::cout << "Z: " << g_CameraZ << "\n-----------------\n";
 		}
 }
 int main(int argc, char* argv[])
@@ -367,10 +393,10 @@ int main(int argc, char* argv[])
     // funções modernas de OpenGL.
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    // Criamos uma janela do sistema operacional, com 800 colunas e 600 linhas
+    // Criamos uma janela do sistema operacional, com 1024 colunas e 768 linhas
     // de pixels, e com título "INF01047 ...".
     GLFWwindow* window;
-    window = glfwCreateWindow(800, 600, "Frogger soh que eh vaca", NULL, NULL);
+    window = glfwCreateWindow(1024, 768, "Frogger soh que eh vaca", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -399,7 +425,7 @@ int main(int argc, char* argv[])
     // redimensionada, por consequência alterando o tamanho do "framebuffer"
     // (região de memória onde são armazenados os pixels da imagem).
     glfwSetFramebufferSizeCallback(window, FramebufferSizeCallback);
-    FramebufferSizeCallback(window, 800, 600); // Forçamos a chamada do callback acima, para definir g_ScreenRatio.
+    FramebufferSizeCallback(window, 1024, 768); // Forçamos a chamada do callback acima, para definir g_ScreenRatio.
 
     // Imprimimos no terminal informações sobre a GPU do sistema
     const GLubyte *vendor      = glGetString(GL_VENDOR);

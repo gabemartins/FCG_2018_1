@@ -852,6 +852,8 @@ int main(int argc, char* argv[])
         {
         move_player(player_initial_pos_x, g_CameraY, player_initial_pos_z);
         gameover = false;
+        g_CameraPhi = 0.0f;
+        g_CameraTheta = 0.0f;
         }
     }
 

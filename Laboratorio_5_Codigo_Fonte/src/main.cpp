@@ -228,7 +228,22 @@ float g_CameraX = 3.0f, g_CameraY = 0.0f, g_CameraZ = 12.0f;
 //COLISOES!!! WOO!
 bool isoutofbounds (float x,float z)
 {
-    if ((x<=-25)||(x>=25)||(z>=25)||(z<=-25))
+    //Bounds do mapa
+    if (
+        //Bounds do mapa
+        ((x<=-30)||(x>=30)||(z>=30)||(z<=-30))
+        ||
+        //Bounds das cercas da esquerda
+        ((x<=1.89)&&(x>=-50)&&(z<=5.78)&&(z>=5.40))
+        ||
+        ((x<=1.89)&&(x>=-50)&&(z<=-4.1)&&(z>=-4.4))
+        ||
+        //Bounds das cercads da direita
+        ((x>=5.20)&&(x<=50)&&(z<=5.78)&&(z>=5.40))
+        ||
+        ((x>=5.20)&&(x<=50)&&(z>=-4.4)&&(z<=-4.0))
+
+        )
     {
         return true;
     }

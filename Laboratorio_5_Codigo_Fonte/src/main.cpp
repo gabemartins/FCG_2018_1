@@ -72,6 +72,7 @@ float pos_vaca_3 = vaca_inicial;
 float pos_vaca_4 = vaca_inicial;
 float pos_vaca_5 = -600.0f;
 int vaca5=0;
+bool gameover = false;
 
 
 // Estrutura que representa um modelo geométrico carregado a partir de um
@@ -298,12 +299,6 @@ bool isoutofbounds (float x,float z)
         ((x>=5.20)&&(x<=50)&&(z<=5.78)&&(z>=5.40))
         ||
         ((x>=5.20)&&(x<=50)&&(z>=-4.4)&&(z<=-4.0))
-
-        //Bounds do Coelho
-        ||((x>=3.80)&&(x<=3.9)&&(z<=-9.2)&&(z>=-10.63))
-        ||((x>=3.80)&&(x<=6.2)&&(z<=-9.2)&&(z>=-10.63))
-        //||((x<=-4.30)&&(x>=-16.7)&&(z>=9.7)&&(z<=16.3))
-
         )
     {
         return true;
@@ -313,6 +308,17 @@ bool isoutofbounds (float x,float z)
         return false;
     }
 }
+bool hitcoelho (float x, float z)
+{
+    if (        //Bounds do Coelho
+        ((x>=3.80)&&(x<=3.9)&&(z<=-9.2)&&(z>=-10.63))
+        ||((x>=3.80)&&(x<=6.2)&&(z<=-9.2)&&(z>=-10.63)))
+        {
+        return true;
+        }
+        else false;
+}
+
 
 // Camera - Player Control
 void free_view_control(float step)
@@ -336,6 +342,10 @@ void free_view_control(float step)
                 g_CameraX -= left.x*5*(-step);
                 g_CameraZ -= left.z*5*(-step);
             }
+            if (hitcoelho (g_CameraX, g_CameraZ))
+            {
+                gameover = true;
+            }
             else
             {
                 //mover para esquerda
@@ -349,6 +359,10 @@ void free_view_control(float step)
             {
                 g_CameraX += left.x*5*(-step);
                 g_CameraZ += left.z*5*(-step);
+            }
+            if (hitcoelho (g_CameraX, g_CameraZ))
+            {
+                gameover = true;
             }
             else
             {
@@ -364,6 +378,10 @@ void free_view_control(float step)
                 g_CameraX += viewD.x*5*(-step);
                 g_CameraZ += viewD.z*5*(-step);
             }
+            if (hitcoelho (g_CameraX, g_CameraZ))
+            {
+                gameover = true;
+            }
             else
             {
                 //mover para frente
@@ -378,6 +396,10 @@ void free_view_control(float step)
             {
                 g_CameraX -= viewD.x*5*(-step);
                 g_CameraZ -= viewD.z*5*(-step);
+            }
+            if (hitcoelho (g_CameraX, g_CameraZ))
+            {
+                gameover = true;
             }
             else
             {
@@ -822,7 +844,15 @@ int main(int argc, char* argv[])
         // definidas anteriormente usando glfwSet*Callback() serão chamadas
         // pela biblioteca GLFW.
         glfwPollEvents();
+        if (gameover == false)
+        {
         free_view_control(0.05f);
+        }
+        else
+        {
+        move_player(player_initial_pos_x, g_CameraY, player_initial_pos_z);
+        gameover = false;
+        }
     }
 
     // Finalizamos o uso dos recursos do sistema operacional

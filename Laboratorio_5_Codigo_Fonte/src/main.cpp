@@ -576,7 +576,7 @@ int main(int argc, char* argv[])
         // Conversaremos sobre sistemas de cores nas aulas de Modelos de Iluminação.
         //
         //           R     G     B     A
-        glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
         // "Pintamos" todos os pixels do framebuffer com a cor definida acima,
         // e também resetamos todos os pixels do Z-buffer (depth buffer).
@@ -772,10 +772,13 @@ int main(int argc, char* argv[])
         if(pos_vaca_2>volta_vaca){
             pos_vaca_2 = vaca_inicial;
             vaca5++;
-            if(vaca5==4){
+            if(vaca5==5){
                 pos_vaca_5=-60;
-                PlaySound(TEXT("../../data/moo2.wav"), NULL, SND_ASYNC);
-                glfwSetTime(0);
+                if(!gameover)
+                {
+                    PlaySound(TEXT("../../data/moo2.wav"), NULL, SND_ASYNC);
+                    glfwSetTime(0);
+                }
 
             }
         }

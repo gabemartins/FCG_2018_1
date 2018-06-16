@@ -237,12 +237,22 @@ void free_view_control(float step)
 			//mover para esquerda
 			g_CameraX -= left.x*step;
 			g_CameraZ -= left.z*step;
+
+			// Printa coordenadas no console
+            std::cout << "X: " << g_CameraX << "\n";
+            std::cout << "Y: " << g_CameraY << "\n";
+            std::cout << "Z: " << g_CameraZ << "\n-----------------\n";
 		}
         if  (g_DKeyPressed)
         {
 			//mover para direita
 			g_CameraX += left.x*step;
 			g_CameraZ += left.z*step;
+
+            // Printa coordenadas no console
+            std::cout << "X: " << g_CameraX << "\n";
+            std::cout << "Y: " << g_CameraY << "\n";
+            std::cout << "Z: " << g_CameraZ << "\n-----------------\n";
 		}
         if  (g_WKeyPressed)
         {
@@ -251,6 +261,7 @@ void free_view_control(float step)
             //g_CameraY += viewD.y*step;
             g_CameraZ += viewD.z*step;
 
+            // Printa coordenadas no console
             std::cout << "X: " << g_CameraX << "\n";
             std::cout << "Y: " << g_CameraY << "\n";
             std::cout << "Z: " << g_CameraZ << "\n-----------------\n";
@@ -261,6 +272,11 @@ void free_view_control(float step)
             g_CameraX -= viewD.x*step;
             //g_CameraY -= viewD.y*step;
             g_CameraZ -= viewD.z*step;
+
+            // Printa coordenadas no console
+            std::cout << "X: " << g_CameraX << "\n";
+            std::cout << "Y: " << g_CameraY << "\n";
+            std::cout << "Z: " << g_CameraZ << "\n-----------------\n";
 		}
 }
 int main(int argc, char* argv[])
@@ -675,7 +691,7 @@ int main(int argc, char* argv[])
 
         // Imprimimos na tela os ângulos de Euler que controlam a rotação do
         // terceiro cubo.
-        TextRendering_ShowEulerAngles(window);
+        // TextRendering_ShowEulerAngles(window);
 
         // Imprimimos na informação sobre a matriz de projeção sendo utilizada.
         TextRendering_ShowProjection(window);

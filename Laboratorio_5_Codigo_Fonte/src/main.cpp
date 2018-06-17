@@ -59,26 +59,32 @@
 #define vel_nivel 0.01f
 #define volta_vaca 30.0f
 #define vaca_inicial -20.0f
-#define vaca_no_chao_1  0.7f
-#define vaca_no_chao_2 -0.5f
-#define vaca_no_chao_3  0.1f
-#define vaca_no_chao_4  1.3f
+#define vaca_y_1  0.7f
+#define vaca_y_2 -0.5f
+#define vaca_y_3  0.1f
+#define vaca_y_4  1.3f
 #define vaca_tam_1 3.0f
 #define vaca_tam_2 1.0f
 #define vaca_tam_3 2.0f
 #define vaca_tam_4 4.0f
 #define vaca_tam_5 50.0f
-float vaca_vel_1 = 0.06f;
-float vaca_vel_2 = 0.12f;
-float vaca_vel_3 = 0.09f;
-float vaca_vel_4 = 0.03f;
-float pos_vaca_1 = vaca_inicial;
-float pos_vaca_2 = vaca_inicial;
-float pos_vaca_3 = vaca_inicial;
-float pos_vaca_4 = vaca_inicial;
-float pos_vaca_5 = -600.0f;
-int vaca5=0;
-int nivel=1;
+float vaca_vel_1 = 0.0f; //0.06f;
+float vaca_vel_2 = 0.0f; //0.12f;
+float vaca_vel_3 = 0.0f; //0.09f;
+float vaca_vel_4 = 0.0f; //0.03f;
+float vaca_x_1 = vaca_inicial;
+float vaca_x_2 = vaca_inicial;
+float vaca_x_3 = vaca_inicial;
+float vaca_x_4 = vaca_inicial;
+float vaca_x_5 = -600.0f;
+float vaca_z_1 = 0.0f;
+float vaca_z_2 = -1.5f;
+float vaca_z_3 = 1.5f;
+float vaca_z_4 = 3.0f;
+float vaca_z_5 = 1.5f;
+int vaca5 = 0;
+int nivel = 1;
+int life = 5;
 bool gameover = false;
 
 
@@ -325,9 +331,21 @@ bool isoutofbounds (float x,float z)
         return false;
     }
 }
+
 bool hitcoelho (float x, float z)
 {
     if (        //Bounds do Coelho
+        ((x>=3.80)&&(x<=3.9)&&(z<=-9.2)&&(z>=-10.63))
+        ||((x>=3.80)&&(x<=6.2)&&(z<=-9.2)&&(z>=-10.63)))
+        {
+        return true;
+        }
+        else return false;
+}
+
+bool hitvaca (float x, float z)
+{
+    if (        //Bounds da Vaca 1
         ((x>=3.80)&&(x<=3.9)&&(z<=-9.2)&&(z>=-10.63))
         ||((x>=3.80)&&(x<=6.2)&&(z<=-9.2)&&(z>=-10.63)))
         {
@@ -731,54 +749,54 @@ int main(int argc, char* argv[])
         DrawVirtualObject("plane");
 
         // Vaca 1
-        model = Matrix_Translate(pos_vaca_1,vaca_no_chao_1,0.0f) * Matrix_Scale(vaca_tam_1,vaca_tam_1,vaca_tam_1);
+        model = Matrix_Translate(vaca_x_1,vaca_y_1,vaca_z_1) * Matrix_Scale(vaca_tam_1,vaca_tam_1,vaca_tam_1);
         glUniformMatrix4fv(model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
         glUniform1i(object_id_uniform, COW);
         DrawVirtualObject("cow");
 
         // Vaca 2
-        model = Matrix_Translate(pos_vaca_2,vaca_no_chao_2,-1.5f) * Matrix_Scale(vaca_tam_2,vaca_tam_2,vaca_tam_2);
+        model = Matrix_Translate(vaca_x_2,vaca_y_2,vaca_z_2) * Matrix_Scale(vaca_tam_2,vaca_tam_2,vaca_tam_2);
         glUniformMatrix4fv(model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
         glUniform1i(object_id_uniform, COW);
         DrawVirtualObject("cow");
 
         // Vaca 3
-        model = Matrix_Translate(pos_vaca_3,vaca_no_chao_3,1.5f) * Matrix_Scale(vaca_tam_3,vaca_tam_3,vaca_tam_3);
+        model = Matrix_Translate(vaca_x_3,vaca_y_3,vaca_z_3) * Matrix_Scale(vaca_tam_3,vaca_tam_3,vaca_tam_3);
         glUniformMatrix4fv(model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
         glUniform1i(object_id_uniform, COW);
         DrawVirtualObject("cow");
 
         // Vaca 4
-        model = Matrix_Translate(pos_vaca_4,vaca_no_chao_4,3.0f) * Matrix_Scale(vaca_tam_4,vaca_tam_4,vaca_tam_4);
+        model = Matrix_Translate(vaca_x_4,vaca_y_4,vaca_z_4) * Matrix_Scale(vaca_tam_4,vaca_tam_4,vaca_tam_4);
         glUniformMatrix4fv(model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
         glUniform1i(object_id_uniform, COW);
         DrawVirtualObject("cow");
 
         // Vaca 5
-        model = Matrix_Translate(pos_vaca_5,vaca_no_chao_1,3.0f) * Matrix_Scale(vaca_tam_5,vaca_tam_5,vaca_tam_5);
+        model = Matrix_Translate(vaca_x_5,vaca_y_1,vaca_z_5) * Matrix_Scale(vaca_tam_5,vaca_tam_5,vaca_tam_5);
         glUniformMatrix4fv(model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
         glUniform1i(object_id_uniform, COW);
         DrawVirtualObject("cow");
 
         // velocidade da vaca
-        pos_vaca_1+= vaca_vel_1;
-        pos_vaca_2+= vaca_vel_2;
-        pos_vaca_3+= vaca_vel_3;
-        pos_vaca_4+= vaca_vel_4;
+        vaca_x_1+= vaca_vel_1;
+        vaca_x_2+= vaca_vel_2;
+        vaca_x_3+= vaca_vel_3;
+        vaca_x_4+= vaca_vel_4;
 
         if ((glfwGetTime()) > 5 && (glfwGetTime()) < 300){
             PlaySound(TEXT("../../data/bgm.wav"), NULL, SND_ASYNC | SND_LOOP);
             glfwSetTime(500);
         }
 
-        if(pos_vaca_1>volta_vaca){
-            pos_vaca_1 = vaca_inicial;
+        if(vaca_x_1>volta_vaca){
+            vaca_x_1 = vaca_inicial;
         }
-        if(pos_vaca_2>volta_vaca){
-            pos_vaca_2 = vaca_inicial;
+        if(vaca_x_2>volta_vaca){
+            vaca_x_2 = vaca_inicial;
             vaca5++;
             if(vaca5==7){
-                pos_vaca_5=-60;
+                vaca_x_5=-60;
                 if(!gameover)
                 {
                     PlaySound(TEXT("../../data/moo2.wav"), NULL, SND_ASYNC);
@@ -787,11 +805,11 @@ int main(int argc, char* argv[])
 
             }
         }
-        if(pos_vaca_3>volta_vaca){
-            pos_vaca_3 = vaca_inicial;
+        if(vaca_x_3>volta_vaca){
+            vaca_x_3 = vaca_inicial;
         }
-        if(pos_vaca_4>volta_vaca){
-            pos_vaca_4 = vaca_inicial;
+        if(vaca_x_4>volta_vaca){
+            vaca_x_4 = vaca_inicial;
         }
 
 

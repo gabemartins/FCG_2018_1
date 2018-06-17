@@ -68,10 +68,10 @@
 #define vaca_tam_3 2.0f
 #define vaca_tam_4 4.0f
 #define vaca_tam_5 50.0f
-float vaca_vel_1 = 0.0f; //0.06f;
-float vaca_vel_2 = 0.0f; //0.12f;
-float vaca_vel_3 = 0.0f; //0.09f;
-float vaca_vel_4 = 0.0f; //0.03f;
+float vaca_vel_1 = 0.06f;
+float vaca_vel_2 = 0.12f;
+float vaca_vel_3 = 0.09f;
+float vaca_vel_4 = 0.03f;
 float vaca_x_1 = vaca_inicial;
 float vaca_x_2 = vaca_inicial;
 float vaca_x_3 = vaca_inicial;
@@ -345,13 +345,23 @@ bool hitcoelho (float x, float z)
 
 bool hitvaca (float x, float z)
 {
-    if (        //Bounds da Vaca 1
-        ((x>=3.80)&&(x<=3.9)&&(z<=-9.2)&&(z>=-10.63))
-        ||((x>=3.80)&&(x<=6.2)&&(z<=-9.2)&&(z>=-10.63)))
-        {
+    if (
+        //Bounds da Vaca 2
+        ( (x>=vaca_x_2-1.0f)&&(x<=vaca_x_2+1.0f)&&(z>=vaca_z_2-0.3f)&&(z<=vaca_z_2+0.3f))
+        ||
+        //Bounds da Vaca 1
+        ( (x>=vaca_x_1-2.50f)&&(x<=vaca_x_1+2.0f)&&(z>=vaca_z_1-0.8f)&&(z<=vaca_z_1+0.8f))
+        ||
+        // Bounds da Vaca 3
+        ( (x>=vaca_x_3-1.75f)&&(x<=vaca_x_3+1.25f)&&(z>=vaca_z_3-0.5f)&&(z<=vaca_z_3+0.5f))
+        ||
+        // Bounds da Vaca 4
+        ( (x>=vaca_x_4-3.0f)&&(x<=vaca_x_4+2.5f)&&(z>=vaca_z_4-1.0f)&&(z<=vaca_z_4+1.0f))
+        )
+    {
         return true;
-        }
-        else return false;
+    }
+    else return false;
 }
 
 
@@ -382,6 +392,10 @@ void free_view_control(float step)
                 gameover = true;
                 aumenta_nivel();
             }
+            if (hitvaca(g_CameraX, g_CameraZ))
+            {
+                gameover = true;
+            }
             else
             {
                 //mover para esquerda
@@ -400,6 +414,10 @@ void free_view_control(float step)
             {
                 gameover = true;
                 aumenta_nivel();
+            }
+            if (hitvaca(g_CameraX, g_CameraZ))
+            {
+                gameover = true;
             }
             else
             {
@@ -420,6 +438,10 @@ void free_view_control(float step)
                 gameover = true;
                 aumenta_nivel();
             }
+            if (hitvaca(g_CameraX, g_CameraZ))
+            {
+                gameover = true;
+            }
             else
             {
                 //mover para frente
@@ -439,6 +461,10 @@ void free_view_control(float step)
             {
                 gameover = true;
                 aumenta_nivel();
+            }
+            if (hitvaca(g_CameraX, g_CameraZ))
+            {
+                gameover = true;
             }
             else
             {
@@ -909,7 +935,7 @@ int main(int argc, char* argv[])
             gameover = false;
             g_CameraPhi = 0.0f;
             g_CameraTheta = 0.0f;
-            picked_bunnies ++;
+            //picked_bunnies ++;
         }
         else
         {

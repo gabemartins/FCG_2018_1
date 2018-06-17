@@ -347,10 +347,10 @@ bool hitcoelho (float x, float z)
     if (        //Bounds do Coelho
         ((x>=3.80)&&(x<=3.9)&&(z<=-9.2)&&(z>=-10.63))
         ||((x>=3.80)&&(x<=6.2)&&(z<=-9.2)&&(z>=-10.63)))
-        {
+    {
         return true;
-        }
-        else return false;
+    }
+    else return false;
 }
 
 bool hitvaca (float x, float z)
@@ -397,17 +397,6 @@ void free_view_control(float step)
                 g_CameraX -= left.x*5*(-step);
                 g_CameraZ -= left.z*5*(-step);
             }
-            if (hitcoelho (g_CameraX, g_CameraZ))
-            {
-                gameover = true;
-                picked_bunnies ++;
-                aumenta_nivel();
-            }
-            if (hitvaca(g_CameraX, g_CameraZ))
-            {
-                life--;
-                gameover = true;
-            }
             else
             {
                 //mover para esquerda
@@ -421,17 +410,6 @@ void free_view_control(float step)
             {
                 g_CameraX += left.x*5*(-step);
                 g_CameraZ += left.z*5*(-step);
-            }
-            if (hitcoelho (g_CameraX, g_CameraZ))
-            {
-                gameover = true;
-                picked_bunnies ++;
-                aumenta_nivel();
-            }
-            if (hitvaca(g_CameraX, g_CameraZ))
-            {
-                life--;
-                gameover = true;
             }
             else
             {
@@ -447,17 +425,6 @@ void free_view_control(float step)
                 g_CameraX += viewD.x*5*(-step);
                 g_CameraZ += viewD.z*5*(-step);
             }
-            if (hitcoelho (g_CameraX, g_CameraZ))
-            {
-                gameover = true;
-                picked_bunnies ++;
-                aumenta_nivel();
-            }
-            if (hitvaca(g_CameraX, g_CameraZ))
-            {
-                life--;
-                gameover = true;
-            }
             else
             {
                 //mover para frente
@@ -472,17 +439,6 @@ void free_view_control(float step)
             {
                 g_CameraX -= viewD.x*5*(-step);
                 g_CameraZ -= viewD.z*5*(-step);
-            }
-            if (hitcoelho (g_CameraX, g_CameraZ))
-            {
-                gameover = true;
-                picked_bunnies ++;
-                aumenta_nivel();
-            }
-            if (hitvaca(g_CameraX, g_CameraZ))
-            {
-                life--;
-                gameover = true;
             }
             else
             {
@@ -827,6 +783,18 @@ int main(int argc, char* argv[])
         vaca_x_3+= vaca_vel_3;
         vaca_x_4+= vaca_vel_4;
 
+        if (hitvaca(g_CameraX,g_CameraZ))
+        {
+            life--;
+            gameover = true;
+        }
+        if (hitcoelho (g_CameraX, g_CameraZ))
+        {
+            gameover = true;
+            picked_bunnies ++;
+            aumenta_nivel();
+        }
+
         if ((glfwGetTime()) > 5 && (glfwGetTime()) < 300){
             PlaySound(TEXT("../../data/bgm.wav"), NULL, SND_ASYNC | SND_LOOP);
             glfwSetTime(500);
@@ -948,7 +916,7 @@ int main(int argc, char* argv[])
         }
         else
         {
-        if (life > 0 /*nr de coelhos*/)
+        if (life > 0)
         {
             move_player(player_initial_pos_x, g_CameraY, player_initial_pos_z);
             gameover = false;
@@ -957,6 +925,8 @@ int main(int argc, char* argv[])
         }
         else
         {
+            g_CameraPhi = 0.0f;
+            g_CameraTheta = 0.0f;
             move_player(400.0f,g_CameraY,400.0f);
         }
     }
@@ -1823,7 +1793,7 @@ void TextRendering_ShowStatus(GLFWwindow* window)
     float pad = TextRendering_LineHeight(window);
 
     char buffer[80];
-    snprintf(buffer, 80, "Lives: %d", life);
+    snprintf(buffer, 80, "Lives: %d  Stage: %d", life, nivel);
 
     TextRendering_PrintString(window, buffer, -1.0f+pad/10, -1.0f+2*pad/10, 1.0f);
 }

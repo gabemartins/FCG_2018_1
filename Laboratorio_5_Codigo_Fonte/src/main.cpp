@@ -56,6 +56,7 @@
 #include "utils.h"
 #include "matrices.h"
 
+#define easter 6
 #define vel_nivel 0.01f
 #define volta_vaca 30.0f
 #define vaca_inicial -20.0f
@@ -82,9 +83,9 @@ float vaca_z_2 = -1.5f;
 float vaca_z_3 = 1.5f;
 float vaca_z_4 = 3.0f;
 float vaca_z_5 = 1.5f;
-int vaca5 = 0;
 int nivel = 1;
 int life = 5;
+int picked_bunnies = 0;
 bool gameover = false;
 
 
@@ -150,6 +151,7 @@ void TextRendering_ShowModelViewProjection(GLFWwindow* window, glm::mat4 project
 void TextRendering_ShowEulerAngles(GLFWwindow* window);
 void TextRendering_ShowProjection(GLFWwindow* window);
 void TextRendering_ShowFramesPerSecond(GLFWwindow* window);
+void TextRendering_ShowStatus(GLFWwindow* window);
 
 // Funções callback para comunicação com o sistema operacional e interação do
 // usuário. Veja mais comentários nas definições das mesmas, abaixo.
@@ -234,6 +236,14 @@ GLint projection_uniform;
 GLint object_id_uniform;
 GLint bbox_min_uniform;
 GLint bbox_max_uniform;
+
+void move_player(float pos_X, float pos_Y, float pos_Z);
+void walkeffect(void);
+void print_coord(void);
+void aumenta_nivel(void);
+bool isoutofbounds (float x,float z);
+bool hitcoelho (float x, float z);
+bool hitvaca (float x, float z);
 
 // Número de texturas carregadas pela função LoadTextureImage()
 GLuint g_NumLoadedTextures = 0;
@@ -390,10 +400,12 @@ void free_view_control(float step)
             if (hitcoelho (g_CameraX, g_CameraZ))
             {
                 gameover = true;
+                picked_bunnies ++;
                 aumenta_nivel();
             }
             if (hitvaca(g_CameraX, g_CameraZ))
             {
+                life--;
                 gameover = true;
             }
             else
@@ -413,10 +425,12 @@ void free_view_control(float step)
             if (hitcoelho (g_CameraX, g_CameraZ))
             {
                 gameover = true;
+                picked_bunnies ++;
                 aumenta_nivel();
             }
             if (hitvaca(g_CameraX, g_CameraZ))
             {
+                life--;
                 gameover = true;
             }
             else
@@ -436,10 +450,12 @@ void free_view_control(float step)
             if (hitcoelho (g_CameraX, g_CameraZ))
             {
                 gameover = true;
+                picked_bunnies ++;
                 aumenta_nivel();
             }
             if (hitvaca(g_CameraX, g_CameraZ))
             {
+                life--;
                 gameover = true;
             }
             else
@@ -460,10 +476,12 @@ void free_view_control(float step)
             if (hitcoelho (g_CameraX, g_CameraZ))
             {
                 gameover = true;
+                picked_bunnies ++;
                 aumenta_nivel();
             }
             if (hitvaca(g_CameraX, g_CameraZ))
             {
+                life--;
                 gameover = true;
             }
             else
@@ -612,7 +630,6 @@ int main(int argc, char* argv[])
 
     // MUSIC - BGM
     PlaySound(TEXT("../../data/bgm.wav"), NULL, SND_ASYNC | SND_LOOP);
-    int picked_bunnies = 0;
 
     // Ficamos em loop, renderizando, até que o usuário feche a janela
     while (!glfwWindowShouldClose(window))
@@ -820,9 +837,9 @@ int main(int argc, char* argv[])
         }
         if(vaca_x_2>volta_vaca){
             vaca_x_2 = vaca_inicial;
-            vaca5++;
-            if(vaca5==7){
-                vaca_x_5=-60;
+            if(picked_bunnies == easter){
+                picked_bunnies = 0;
+                vaca_x_5 = -60;
                 if(!gameover)
                 {
                     PlaySound(TEXT("../../data/moo2.wav"), NULL, SND_ASYNC);
@@ -903,6 +920,8 @@ int main(int argc, char* argv[])
         // terceiro cubo.
         // TextRendering_ShowEulerAngles(window);
 
+        TextRendering_ShowStatus(window);
+
         // Imprimimos na informação sobre a matriz de projeção sendo utilizada.
         TextRendering_ShowProjection(window);
 
@@ -929,13 +948,12 @@ int main(int argc, char* argv[])
         }
         else
         {
-        if (picked_bunnies < 3 /*nr de coelhos*/)
+        if (life > 0 /*nr de coelhos*/)
         {
             move_player(player_initial_pos_x, g_CameraY, player_initial_pos_z);
             gameover = false;
             g_CameraPhi = 0.0f;
             g_CameraTheta = 0.0f;
-            //picked_bunnies ++;
         }
         else
         {
@@ -1793,6 +1811,19 @@ void TextRendering_ShowEulerAngles(GLFWwindow* window)
 
     char buffer[80];
     snprintf(buffer, 80, "Euler Angles rotation matrix = Z(%.2f)*Y(%.2f)*X(%.2f)\n", g_AngleZ, g_AngleY, g_AngleX);
+
+    TextRendering_PrintString(window, buffer, -1.0f+pad/10, -1.0f+2*pad/10, 1.0f);
+}
+
+void TextRendering_ShowStatus(GLFWwindow* window)
+{
+    if ( !g_ShowInfoText )
+        return;
+
+    float pad = TextRendering_LineHeight(window);
+
+    char buffer[80];
+    snprintf(buffer, 80, "Lives: %d", life);
 
     TextRendering_PrintString(window, buffer, -1.0f+pad/10, -1.0f+2*pad/10, 1.0f);
 }
